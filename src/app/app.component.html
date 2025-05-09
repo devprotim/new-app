@@ -1,0 +1,52 @@
+<div class="container">
+  <h3>Cashier Cash Received Tracker</h3>
+
+  <div class="search-form-container">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="yearRange">Year Range</label>
+          <select id="yearRange" formControlName="yearRange" class="form-control">
+            <option value="">Select Year</option>
+            <option *ngFor="let year of yearOptions" [value]="year">{{ year }}</option>
+          </select>
+          <div *ngIf="searchForm.get('yearRange')?.invalid && searchForm.get('yearRange')?.touched"
+            class="error-message">
+            Year range is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fromDate">From Date</label>
+          <input type="date" id="fromDate" formControlName="fromDate" class="form-control">
+          <div *ngIf="searchForm.get('fromDate')?.invalid && searchForm.get('fromDate')?.touched" class="error-message">
+            From date is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="toDate">To Date</label>
+          <input type="date" id="toDate" formControlName="toDate" class="form-control">
+          <div *ngIf="searchForm.get('toDate')?.invalid && searchForm.get('toDate')?.touched" class="error-message">
+            To date is required
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Search</button>
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Results section can be added here -->
+  <div class="results-container" *ngIf="searchForm.valid && searchForm.touched">
+    <h4>Search Parameters:</h4>
+    <p>Year Range: {{ searchForm.get('yearRange')?.value }}</p>
+    <p>From Date: {{ searchForm.get('fromDate')?.value }}</p>
+    <p>To Date: {{ searchForm.get('toDate')?.value }}</p>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
